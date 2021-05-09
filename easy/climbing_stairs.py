@@ -1,8 +1,9 @@
+# https://leetcode.com/problems/climbing-stairs/
 class Solution(object):
     # Top down + memorization (dictionary)
     def __init__(self):
         self.memo = {1: 1, 2: 2}
-
+        # self.memo = {0: 1, 1: 1}
     def climbStairs(self, n):
         if n not in self.memo:
             self.memo[n] = self.climbStairs(n-1) + self.climbStairs(n-2)
