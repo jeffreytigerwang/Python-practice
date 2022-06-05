@@ -1,25 +1,20 @@
-import numpy as np
+from typing import List
 
+matrix = [[1,2,3],[4,5,6]]
 
-def NormalizeData(data):
-    return (data - np.min(data)) / (np.max(data) - np.min(data))
+print(len(matrix[0]))
+print(len(matrix))
+print(matrix)
 
+newMatrix = [[0]*len(matrix) for i in range(len(matrix[0]))]
 
-def softmax(x):
-    f_x = np.exp(x) / np.sum(np.exp(x))
-    return f_x
+print(newMatrix)
 
+for i in range(len(matrix)):
+    for j in range(len(matrix[0])):
+        if i == j:
+            newMatrix[i][j] = matrix[i][j]
+        else:
+            newMatrix[j][i] = matrix[i][j]
 
-a = np.array([[5, -2, 4, 0],
-             [5, -1, 6, 2],
-              [10,-3,-2,5],
-             [0, 1, 4, -1],
-             [-3, 4, 9, 3]])
-
-# print(NormalizeData(a))
-
-a_pr = np.copy(NormalizeData((a)))
-for i in range(5):
-    a_pr[i] = softmax(a_pr[i])
-
-print(a_pr)
+print(newMatrix)
