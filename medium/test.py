@@ -1,22 +1,19 @@
-# Python code to
-# demonstrate readlines()
+n=7
+m=3
+dp = [[0] * n] * m
+dp1 = [[0 for i in range(n)] for j in range(m)]
 
-L = []
 
-# writing to file
-file1 = open('myfile.txt', 'w')
-file1.writelines(L)
-file1.close()
+dp[2][6] = 3
+dp1[2][6] = 3
 
-# Using readlines()
-
-file1 = open('myfile.txt', 'r')
-
-Lines = file1.readlines()
+print(dp)
+print(dp1)
 
 
 
-count = 0
-# Strips the newline character
 
-print(Lines)
+if dp == dp1:
+    print('good')
+else:
+    print('bad')

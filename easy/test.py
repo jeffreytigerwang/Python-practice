@@ -1,20 +1,11 @@
 from typing import List
 
-matrix = [[1,2,3],[4,5,6]]
+minDiff = float('inf')
+maxDiff = float('-inf')
 
-print(len(matrix[0]))
-print(len(matrix))
-print(matrix)
+test1 = 3
 
-newMatrix = [[0]*len(matrix) for i in range(len(matrix[0]))]
-
-print(newMatrix)
-
-for i in range(len(matrix)):
-    for j in range(len(matrix[0])):
-        if i == j:
-            newMatrix[i][j] = matrix[i][j]
-        else:
-            newMatrix[j][i] = matrix[i][j]
-
-print(newMatrix)
+if test1 < minDiff:
+    minDiff = test1
+print(type(minDiff))
+print(maxDiff)
