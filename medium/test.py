@@ -1,12 +1,8 @@
-test = []
-test1 = []
-test2 = [1,2,3,4]
-test1.append(test2[0])
-test1.append(test2[1])
+from itertools import product
 
-print(test1)
+for i, j in product(range(1, 3), range(1, 2)):
+    print(i, j)
 
-test.append(test1)
-test.append(test1)
-print(test)
-print(test)
+for i in range(1,3):
+    for j in range(1,2):
+        print(i,j)
