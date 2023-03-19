@@ -8,15 +8,20 @@ class TreeNode(object):
 
 class Solution(object):
     def maxDepth(self, root):
-        return self.child(root)
+    #     return self.child(root)
+    #
+    # def child(self, tree):
+    #     if tree is None:
+    #         return 0
+    #     if tree.left is None and tree.right is None:
+    #         return 1
+    #
+    #     return 1 + max(self.child(tree.left), self.child(tree.right))
 
-    def child(self, tree):
-        if tree is None:
+        if not root:
             return 0
-        if tree.left is None and tree.right is None:
-            return 1
 
-        return 1 + max(self.child(tree.left), self.child(tree.right))
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
 
 
 b1 = TreeNode(9)

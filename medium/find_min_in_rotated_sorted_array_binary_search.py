@@ -1,23 +1,62 @@
-class Solution(object):
-    def findMin(self, nums):
+# https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+from typing import List
+
+
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        # if len(nums) == 1:
+        #     return nums[0]
+        #
+        # l = 0
+        # r = len(nums) - 1
+        #
+        # while l <= r:
+        #     mid = l + (r - l) // 2
+        #
+        #     if nums[mid] < nums[mid - 1]:
+        #         return nums[mid]
+        #
+        #     if mid < len(nums) - 1:
+        #         if nums[mid] > nums[mid + 1]:
+        #             return nums[mid + 1]
+        #
+        #     if nums[l] < nums[l - 1]:
+        #         return nums[l]
+        #     if l < len(nums) - 1:
+        #         if nums[l] > nums[l + 1]:
+        #             return nums[l + 1]
+        #
+        #     if nums[r] < nums[r - 1]:
+        #         return nums[r]
+        #     if r < len(nums) - 1:
+        #         if nums[r] > nums[r + 1]:
+        #             return nums[r + 1]
+        #
+        #     if nums[mid] > nums[r]:
+        #         l = mid + 1
+        #
+        #     if nums[mid] < nums[r]:
+        #         r = mid - 1
+        #
+        # return nums[0]
+
         if len(nums) == 1:
             return nums[0]
 
-        left = 0
-        right = len(nums) - 1
+        l = 0
+        r = len(nums) - 1
+        minNum = float("inf")
 
-        if nums[left] < nums[right]:
-            return nums[left]
+        while l <= r:
+            mid = l + (r - l) // 2
+            minNum = min(minNum, nums[mid])
 
-        while nums[left] > nums[right]:
-            mid = (left + right) // 2
-            if nums[mid] < nums[right]:
-                right = mid
+            if nums[mid] <= nums[r]:
+                r = mid - 1
             else:
-                left = mid + 1
-        return nums[left]
+                l = mid + 1
+
+        return min(minNum, nums[0])
 
 
-nums = [2,3,4,1]
-answer = Solution()
-print(answer.findMin(nums))

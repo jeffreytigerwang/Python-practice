@@ -6,29 +6,36 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
-            return 0
+        # if not nums:
+        #     return 0
+        #
+        # nums.sort()
+        # maxLength = 1
+        # tempLength = 1
+        # for i in range(len(nums) - 1):
+        #
+        #     if nums[i] + 1 == nums[i + 1]:
+        #         # print(nums[i])
+        #         tempLength = tempLength + 1
+        #         maxLength = max(maxLength, tempLength)
+        #     elif nums[i] == nums[i + 1]:
+        #         continue
+        #     else:
+        #         tempLength = 1
+        #
+        # return maxLength
 
-        nums.sort()
-        maxLength = 1
-        tempLength = 1
-        for i in range(len(nums) - 1):
+        tempNums = set(nums)
+        res = 0
 
-            if nums[i] + 1 == nums[i + 1]:
-                # print(nums[i])
-                tempLength = tempLength + 1
-                maxLength = max(maxLength, tempLength)
-            elif nums[i] == nums[i + 1]:
-                continue
-            else:
-                tempLength = 1
+        for num in tempNums:
+            if num - 1 not in tempNums:
+                length = 1
+                while num + length in tempNums:
+                    length += 1
 
-        # print(nums)
-        # print(maxLength)
-
-        return maxLength
-
-
+                res = max(res, length)
+        return res
 def main():
     sol = Solution()
     nums = [0,3,7,2,5,8,4,6,0,1]

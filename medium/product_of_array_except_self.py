@@ -4,20 +4,35 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        L, R, res = [0]*len(nums), [0]*len(nums), [0]*len(nums)
-        L[0] = 1
-        R[len(nums)-1] = 1
+        # length = len(nums)
+        # l, r, res = [1] * length, [1] * length, [1] * length
+        #
+        # for i in range(1, length):
+        #     l[i] = l[i - 1] * nums[i - 1]
+        #
+        # for i in range(length - 2, -1, -1):
+        #     r[i] = r[i + 1] * nums[i + 1]
+        #
+        # for i in range(length):
+        #     res[i] = l[i] * r[i]
+        #
+        # return res
 
-        for i in range(1, len(nums)):
-            L[i] = L[i-1]*nums[i-1]
+        length = len(nums)
 
-        for i in range(len(nums)-2, -1, -1):
-            R[i] = R[i+1]*nums[i+1]
+        res = [1] * len(nums)
 
-        for i in range(0, len(nums)):
-            res[i] = L[i]*R[i]
+        # prefix = 1
+        for i in range(1, length):
+            res[i] = res[i - 1] * nums[i - 1]
+
+        postfix = 1
+        for i in range(length - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+
+
         return res
-
 
 nums = [1,2,3,4]
 answer = Solution()

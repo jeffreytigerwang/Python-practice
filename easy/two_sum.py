@@ -26,7 +26,7 @@ class Solution(object):
 
 
 
-nums = [3,2,4]
-target = 6
+nums = [3,4]
+target = 7
 answer = Solution()
 print(answer.twoSum(nums, target))

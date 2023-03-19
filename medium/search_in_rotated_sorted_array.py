@@ -1,55 +1,43 @@
-class Solution(object):
-    def search(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """
+from typing import List
+
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
         if len(nums) == 1:
-            return 0 if nums[0] == target else -1
+            if nums[0] != target:
+                return -1
+            else:
+                return 0
 
-        left = 0
-        right = len(nums) - 1
+        l = 0
+        r = len(nums) - 1
 
-        while left < right:
-            mid = left + (right - left) // 2
-            print(mid)
+        while l <= r:
+            mid = l + (r - l) // 2
+            print(l, r, mid)
 
             if nums[mid] == target:
                 return mid
 
-            if nums[left] == target:
-                return left
-
-            if nums[right] == target:
-                return right
-
-
-            if nums[mid] > nums[right]: # e.g. nums = [4,5,6,7,8,1,2,3] target = 8
-                if target < nums[mid] and target > nums[right]:
-                    right = mid - 1
-                    print("A")
-
+            if nums[mid] > nums[r]:
+                if nums[l] > target or nums[mid] < target:
+                    l = mid + 1
                 else:
-                    left = mid + 1
-                    print("B")
+                    r = mid - 1
 
-            else: # e.g., nums = [5,6,7,1,2,3,4] target = 2
-                if target < nums[right] and target > nums[mid]:
-                    left = mid + 1
-                    print("C")
-
+            else:
+                if nums[r] < target or nums[mid] > target:
+                    r = mid - 1
                 else:
-                    right = mid - 1
-                    print("D")
+                    l = mid + 1
+
 
         return -1
 
-
-nums = [4,5,6,7,8,1,2,3]
+nums = [3,1]
 #nums = [1,2,3,4,5,6]
 
-target = 8
+target = 1
 
 answer = Solution()
 
