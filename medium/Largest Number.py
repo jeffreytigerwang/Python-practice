@@ -2,57 +2,54 @@
 from typing import List
 
 
-
-
 class Solution:
     def largestNumber(self, nums: List[int]) -> str:
         # Merge sort approach
         for i, n in enumerate(nums):
             nums[i] = str(n)
+
         def mergeSort(nums):
             if len(nums) <= 1:
                 return nums
 
-            mid = len(nums) // 2
+            m = len(nums) // 2
+            left = mergeSort(nums[: m])
+            right = mergeSort(nums[m:])
 
-            l = mergeSort(nums[:mid])
-            r = mergeSort(nums[mid:])
+            return merge(left, right, nums)
 
-            return merge(l, r)
+        def merge(left,right, nums):
+            i, j, k = 0, 0, 0
 
-        def merge(l, r):
-            res = []
-            i, j = 0, 0
-
-            while i < len(l) and j < len(r):
-                # if int(str(l[i]) + str(r[j])) > int(str(r[j]) + str(l[i])):
-                if int(l[i] + r[j]) > int(r[j] + l[i]):
-                    res.append(l[i])
+            while i < len(left) and j < len(right):
+                if int(left[i] + right[j]) > int(right[j] + left[i]):
+                    nums[k] = left[i]
                     i += 1
                 else:
-                    res.append(r[j])
+                    nums[k] = right[j]
                     j += 1
 
-            while i < len(l):
-                res.append(l[i])
+                k += 1
+
+            while i < len(left):
+                nums[k] = left[i]
+                k += 1
                 i += 1
 
-            while j < len(r):
-                res.append(r[j])
+            while j < len(right):
+                nums[k] = right[j]
+                k += 1
                 j += 1
 
-            return res
+            return nums
 
-        res = mergeSort(nums)
+        mergeSort(nums)
 
-        return str(int("".join(map(str, res))))
+        return str(int(''.join(nums)))
 
-
-        # print(mergeSort(nums))
 
 
 sol = Solution()
-nums = [3,30,34,5,9]
+nums = [3, 30, 34, 5, 9]
 
 sol.largestNumber(nums)
-

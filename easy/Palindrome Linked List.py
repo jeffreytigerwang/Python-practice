@@ -9,54 +9,33 @@ class ListNode:
         self.next = next
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        if not head or not head.next:
-            return True
-        #
-        # tempHead = head
-        # tempList = []
-        #
-        # while tempHead:
-        #     tempList.append(tempHead.val)
-        #     tempHead = tempHead.next
-        #
-        # rightIndex = len(tempList) // 2
-        #
-        # if len(tempList) % 2 == 0:
-        #     leftIndex = rightIndex - 1
-        # else:
-        #     leftIndex = rightIndex
-        #
-        # while leftIndex >= 0 and rightIndex < len(tempList):
-        #     if tempList[rightIndex] == tempList[leftIndex]:
-        #         rightIndex += 1
-        #         leftIndex -= 1
-        #         continue
-        #     else:
-        #         return False
-        #
-        # return True
-
-        fast, slow = head, head
-        rev = None
+        slow, fast = head, head
 
         while fast and fast.next:
+            slow = slow.next
             fast = fast.next.next
 
-            # temp = rev
-            # rev = slow
-            # slow = slow.next    #reverse line 47 and 48 will result in an error as assigning rev.next to temp means slow.next = temp and, later, slow = slow.next means slow = temp, which is None
-            # rev.next = temp
+        dummy = None
 
-            rev, rev.next, slow = slow, rev, slow.next
+        while slow:
+            temp = slow.next
+            slow.next = dummy
+            dummy = slow
+            slow = temp
 
-        if fast:
-            slow = slow.next
+        l, r = head, dummy
 
-        while rev and rev.val == slow.val:
-            rev = rev.next
-            slow = slow.next
+        while head and dummy:
+            if head.val != dummy.val:
+                return False
 
-        return not rev
+            head = head.next
+            dummy = dummy.next
+
+        return True
+
+
+
 def main():
     sol = Solution()
     head = ListNode(1)

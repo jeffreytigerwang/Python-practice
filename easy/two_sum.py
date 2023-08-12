@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/two-sum/
 class Solution(object):
     def twoSum(self, nums, target):
         """
@@ -13,6 +14,7 @@ class Solution(object):
         #
         #             return [i,j]
 
+        # Value : Index
         dict_p = {}
 
         for i, n in enumerate(nums):

@@ -1,33 +1,62 @@
 # https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+from typing import Optional
+
 
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-class Solution(object):
-    def removeNthFromEnd(self, head, n):
-        """
-        :type head: ListNode
-        :type n: int
-        :rtype: ListNode
-        """
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # dummy = ListNode(0, head)
+        # l = dummy
+        # r = head
+        #
+        # while r and n > 0:
+        #     n -= 1
+        #     r = r.next
+        #
+        # while r and l:
+        #     r = r.next
+        #     l = r.next
+        #
+        # l.next = l.next.next
+        #
+        # return dummy.next
 
         count = 0
-        tempNode = head
+        temp = head
 
-        while tempNode.next is not None:
-            count = count + 1
-            tempNode = tempNode.next
+        while temp:
+            count += 1
+            temp = temp.next
 
-        if n == count + 1:
+        # print(count)
+
+        if count == n:
             return head.next
 
-        tempNode = head
+        temp = head
+        diff = count - n
 
-        while (count - n) > 0:
-            tempNode = tempNode.next
-            count = count - 1
+        while diff - 1 > 0:
+            temp = temp.next
+            diff -= 1
 
-        tempNode.next = tempNode.next.next
+        temp.next = temp.next.next
+
         return head
+
+
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+
+sol = Solution()
+
+sol.removeNthFromEnd(head, 2)

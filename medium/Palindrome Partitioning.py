@@ -4,24 +4,34 @@ from typing import List
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        def helper(s, path, res):
-            if not s:
+        res = []
+
+        def backtracking(string, path):
+            if not string:
                 res.append(path[:])
                 return
 
-            for i in range(1, len(s) + 1):
-                if s[:i] == s[i - 1:: - 1]:
-                    # path.append(s[:i])
-                    # helper(s[i:], path, res)
-                    # path.pop()
-                    helper(s[i:], path + [s[:i]], res)
+            for i in range(len(string)):
+                substring = string[: i + 1]
 
-        res = []
-        helper(s, [], res)
+                if self.isPalindrome(substring):
+                    path.append(substring)
+                    backtracking(string[i + 1:], path)
+                    path.pop()
+
+            return
+
+        backtracking(s, [])
         return res
+
+
+    def isPalindrome(self, substring):
+        return substring == substring[:: -1]
+
+
 def main():
     sol = Solution()
-    s = "abb"
+    s = "aab"
     print(sol.partition(s))
 
 

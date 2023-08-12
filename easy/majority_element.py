@@ -1,17 +1,36 @@
-class Solution(object):
-    def majorityElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        element1 = set(nums)
-        map2 = dict.fromkeys(element1, 0)
-        for i in nums:
-            map2[i] += 1
-        return max(map2, key=lambda k: map2[k])
+# https://leetcode.com/problems/majority-element/
+from typing import List
+from collections import Counter
 
 
-list1 = [1, 2, 2, 2, 3, 4, 5]
+# Space complexity O(n)
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        n = len(nums) // 2
 
-answer = Solution()
-print(answer.majorityElement(list1))
+        temp = Counter(nums)
+
+        for key in temp.keys():
+            if temp[key] > n:
+                return key
+
+        # return max(temp, key=temp.get)
+
+
+# Space complexity O(1)
+
+class Solution2:
+    def majorityElement(self, nums: List[int]) -> int:
+        res = 0
+        count = 0
+
+        for n in nums:
+            if count == 0:
+                res = n
+
+            if n == res:
+                count += 1
+            else:
+                count -= 1
+
+        return res

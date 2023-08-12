@@ -13,47 +13,17 @@ class TreeNode:
 # https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solutions/34579/python-short-recursive-solution/
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        # if len(preorder) == 0:
-        #     return
-        #
-        # if len(preorder) == 1:
-        #     return TreeNode(preorder[0])
-        #
-        # root = TreeNode(preorder[0])
-        #
-        # leftInOrder = inorder[: inorder.index(preorder[0])]
-        # rightInOrder = inorder[inorder.index(preorder[0]) + 1:]
-        #
-        # leftPreOrder = preorder[1: len(leftInOrder) + 1]
-        # rightPreOrder = preorder[1 + len(leftInOrder): ]
-        #
-        # root.left = self.buildTree(leftPreOrder, leftInOrder)
-        # root.right = self.buildTree(rightPreOrder, rightInOrder)
-        #
-        #
-        # return root
+        if not preorder or not inorder:
+            return
 
-        inorderDict = {}
+        # print(preorder)
+        # print(inorder)
 
-        for i, num in enumerate(inorder):
-            inorderDict[num] = i
+        root = TreeNode(preorder[0])
 
-        preorderIndex = 0
+        indexRoot = inorder.index(root.val)
 
-        def helper(startIndex, endIndex):
-            nonlocal preorderIndex
+        root.left = self.buildTree(preorder[1: indexRoot + 1], inorder[: indexRoot])
+        root.right = self.buildTree(preorder[indexRoot + 1:], inorder[indexRoot + 1:])
 
-            if startIndex > endIndex:
-                return
-
-            rootValue = preorder[preorderIndex]
-            root = TreeNode(rootValue)
-
-            preorderIndex += 1
-
-            root.left = helper(startIndex, inorderDict[rootValue] - 1)  # inorderDict[rootValue] - 1: because it is a helper function, not slicing list!
-            root.right = helper(inorderDict[rootValue] + 1, endIndex)   # - 1 and + 1 : help to exclude inorderDict[rootValue]
-
-            return root
-
-        return helper(0, len(inorder) - 1)
+        return root

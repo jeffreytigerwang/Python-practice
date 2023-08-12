@@ -16,6 +16,9 @@ class Solution(object):
         :rtype: TreeNode
         """
 
+        if not root:
+            return None
+
         if root == p or root == q:
             return root
 
@@ -31,7 +34,7 @@ class Solution(object):
         if left and right:
             return root
 
-        if left is None:
-            return right
-        else:
+        if left:
             return left
+        else:
+            return right

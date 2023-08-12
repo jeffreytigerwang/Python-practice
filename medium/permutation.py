@@ -2,25 +2,23 @@ from typing import List
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-        count = []
+        res = []
 
-        def rec(updatedNums, temp):
-            if (temp not in ans) and (len(temp) == len(nums)):
-                ans.append(temp)
-                count.append('1')
+        def backtracking(nums, path):
+            if not nums:
+                res.append(path[:])
                 return
 
-            for i in range(len(updatedNums)):
-                # temp.append(updatedNums[i])
+            for i in range(len(nums)):
+                path.append(nums[i])
+                backtracking(nums[: i] + nums[i + 1:], path)
+                path.pop()
 
-                rec(updatedNums[:i] + updatedNums[i+1:], temp + [updatedNums[i]])
-        print(ans)
-        rec(nums, [])
-        print(ans)
-        print(count)
-        return ans
+            return
 
+        backtracking(nums, [])
+
+        return res
 
 def main():
     nums = [1, 2, 3]

@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/set-matrix-zeroes/submissions/943473012/
 from typing import List
 
 
@@ -6,16 +7,22 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        tempIndex = [[x, y] for x, i in enumerate(matrix) for y, j in enumerate(i) if j == 0]
-        print(tempIndex)
 
-        for coordinate in tempIndex:
-            matrix[coordinate[0]] = [0 for i in range(len(matrix[coordinate[0]]))]
+        row = len(matrix)
+        column = len(matrix[0])
+        path = set()
 
-            for i in range(len(matrix)):
-                matrix[i][coordinate[1]] = 0
+        for r in range(row):
+            for c in range(column):
+                if matrix[r][c] == 0:
+                    path.add((r, c))
 
-        print(matrix)
+        while path:
+            r, c = path.pop()
+            matrix[r] = [0 for i in range(column)]
+
+            for i in range(row):
+                matrix[i][c] = 0
 
 
 def main():

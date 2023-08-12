@@ -16,22 +16,23 @@ class Solution:
         if not root:
             return []
 
+        curr = [root]
         res = []
-        level = [root]
 
-        while level:
-            res.append([node.val for node in level])
+        while curr:
+            res.append([node.val for node in curr])
 
             temp = []
 
-            for node in level:  # Update level directly (without temp) will result in infinite loop
-                # temp.extend([node.left, node.right])
-                temp.extend([node.left])
-                temp.extend([node.right])
+            for node in curr:
+                temp.append(node.left)
+                temp.append(node.right)
 
-            level = [leaf for leaf in temp if leaf]
+            curr = [node for node in temp if node]
 
         return res
+
+
 
 
 

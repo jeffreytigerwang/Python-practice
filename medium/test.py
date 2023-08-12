@@ -1,45 +1,34 @@
+from typing import Optional
 from typing import List
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 class Solution:
-    def search(self, nums: List[int], target: int) -> int:
-        l = 0
-        r = len(nums) - 1
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
 
-        while l <= r:
-            mid = l + (r - l) // 2
+        def recursive(root):
+            if root:
+                recursive(root.left)
+                res.append(root.val)
+                recursive(root.right)
 
-            if nums[mid] == target:
-                return mid
-            elif nums[l] == target:
-                return l
-            elif nums[r] == target:
-                return r
-
-            if nums[mid] > target:
-                if nums[mid] > nums[r] and nums[r] < target:
-                    r = mid - 1
-                elif nums[mid] > nums[r] and nums[r] > target:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-
-            if nums[mid] < target:
-                if nums[mid] < nums[l] and nums[l] > target:
-                    l = mid + 1
-                elif nums[mid] < nums[l] and nums[l] < target:
-                    r = mid - 1
-                else:
-                    l = mid + 1
-
-        return -1
+        recursive(root)
+        return res
 
 
-nums = [4,5,6,7,0,1,2]
-#nums = [1,2,3,4,5,6]
 
-target = 3
 
-answer = Solution()
 
-print(answer.search(nums, target))
+node1 = [1]
+node2 = [2]
+
+node3 = [1] + [2]
+
+print(node3)

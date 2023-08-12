@@ -9,20 +9,36 @@ class ListNode:
         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or not head.next:
-            return head
+        # if not head or not head.next:
+        #     return head
+        #
+        # prev = None
+        # curr = head
+        #
+        # while curr:
+        #     temp = curr.next
+        #     curr.next = prev
+        #     prev = curr
+        #
+        #     curr = temp
+        #
+        # return prev
 
-        rev = None
+        if not head:
+            return None
 
-        while head:
-            # rev, rev.next, head = head, rev, head.next
-            temp = rev
-            rev = head
-            head = head.next
-            rev.next = temp
+        newHead = head
+        # print(newHead.val)
 
+        if head.next:
+            newHead = self.reverseList(head.next)
+            # print(newHead.val)
+            head.next.next = head
 
-        return rev
+        head.next = None
+
+        return newHead
+
 
 sol = Solution()
 head = ListNode(0)

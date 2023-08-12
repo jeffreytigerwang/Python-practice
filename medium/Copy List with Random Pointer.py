@@ -16,97 +16,33 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        #   My approach, O(n^2)
-        # if not head:
-        #     return
-        #
-        # if not head.next:
-        #     copyHead = Node(head.val)
-        #
-        #     if head.random:
-        #         copyHead.random = copyHead
-        #     return copyHead
-        #
-        # tempHead = head
-        # tempHead = tempHead.next
-        #
-        # copyHead = Node(head.val)
-        # tempCopyHead = copyHead
-        #
-        # while tempHead:
-        #     tempNode = Node(tempHead.val)
-        #     tempCopyHead.next = tempNode
-        #     tempCopyHead = tempCopyHead.next
-        #
-        #     tempHead = tempHead.next
-        #
-        # tempHead = head
-        # tempCopyHead = copyHead
-        #
-        # while tempHead:
-        #     # print("Inside while tempHead")
-        #     if tempHead.random:
-        #         # print("Inside if tempHead.random exist")
-        #         searchHead = head
-        #         index = 0
-        #         while searchHead:
-        #
-        #
-        #             if searchHead != tempHead.random:
-        #                 # print("Inside searchHead != tempHead.random")
-        #                 index += 1
-        #                 searchHead = searchHead.next
-        #
-        #             else:
-        #                 # print(index)
-        #                 searchCopyHead = copyHead
-        #                 for i in range(index):
-        #                     searchCopyHead = searchCopyHead.next
-        #
-        #                 # print("Inside else")
-        #                 tempCopyHead.random = searchCopyHead
-        #                 break
-        #
-        #     tempHead = tempHead.next
-        #     tempCopyHead = tempCopyHead.next
-
-        #   https://leetcode.com/problems/copy-list-with-random-pointer/solutions/373694/python3-dictionary/
-
         if not head:
-            return None
+            return head
 
-        nodeDict = {}
-        curr = head
+        deepCopyDict = {}
+        temp = head
 
-        while curr:
-            nodeDict[curr] = Node(curr.val)
-            curr = curr.next
+        while temp:
+            deepCopyDict[temp] = Node(temp.val)
+            temp = temp.next
 
-        curr = head
+        # for key in deepCopyDict.keys():
+        #     print(deepCopyDict[key].val)
 
-        while curr:
-            if curr.next:
-                nodeDict[curr].next = nodeDict[curr.next]
+        temp = head
 
-            if curr.random:
-                nodeDict[curr].random = nodeDict[curr.random]
+        while temp:
+            if temp.next:
+                deepCopyDict[temp].next = deepCopyDict[temp.next]
 
-            curr = curr.next
+            if temp.random:
+                deepCopyDict[temp].random = deepCopyDict[temp.random]
 
-        return nodeDict[head]
+            temp = temp.next
 
-        # while copyHead:
-        #     print(copyHead.val)
-        #
-        #     if not copyHead.random:
-        #         print("Null")
-        #     else:
-        #         print(copyHead.random.val)
-        #
-        #     print()
-        #     copyHead = copyHead.next
+        return deepCopyDict[head]
 
-        return copyHead
+
 
 
 sol = Solution()

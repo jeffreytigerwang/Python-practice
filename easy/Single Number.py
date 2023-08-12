@@ -5,17 +5,26 @@ from typing import List
 
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        dictionary = defaultdict(int)
+        # # O(n)
+        # dictionary = defaultdict(int)
+        #
+        # for num in nums:
+        #     dictionary[num] += 1
+        #
+        # for key, value in dictionary.items():
+        #     if value == 1:
+        #         return key
+        #
+        # return 0
 
-        for num in nums:
-            dictionary[num] += 1
+        # XOR everything --> same value will cancel out, leaving the only result as the res.
 
-        for key, value in dictionary.items():
-            if value == 1:
-                return key
+        res = 0 # n XOR 0 = n
 
-        return 0
-        # print(dictionary)
+        for n in nums:
+            res ^= n
+
+        return res
 
 
 def main():

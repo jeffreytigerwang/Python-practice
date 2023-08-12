@@ -1,20 +1,20 @@
 # https://leetcode.com/problems/coin-change/
 class Solution(object):
     def coinChange(self, coins, amount):
-        dp = [float('Inf')] * (amount + 1)
+        # Bottom-up; dp = min number of coin required from 0 to amount.
+        dp = [float('inf')] * (amount + 1)
         dp[0] = 0
-        coins.sort()
-        for i in range(1, amount + 1):
-            temp = [float('Inf')]
-            for c in coins:
-                if i - c < 0:
-                    break
-                temp.append(dp[i - c])
-            print(temp)
-            dp[i] = min(temp) + 1
 
-        print(dp)
-        return dp[amount] if dp[amount] != float('Inf') else -1
+        for i in range(1, amount + 1):
+            for c in coins:
+                if i - c >= 0:
+                    dp[i] = min(dp[i], dp[i - c] + 1)
+
+        return dp[amount] if dp[amount] != float('inf') else -1
+
+
+
+
 
 
 coins = [2]

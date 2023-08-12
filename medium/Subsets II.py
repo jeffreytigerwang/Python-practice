@@ -3,24 +3,28 @@ from typing import List
 
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
         nums.sort()
-        ans = [[]]
 
-        for i in range(len(nums)):
-            # ans.append([nums[i]])
+        def backtracking(nums, path):
+            res.append(path[:])
 
-            for j in ans:
-                if j + [nums[i]] not in ans:
-                    ans = ans + [j + [nums[i]]]
-        print(ans)
-        return ans
+            for i in range(len(nums)):
+                if i == 0 or (i > 0 and nums[i] != nums[i - 1]):
+                    path.append(nums[i])
+                    backtracking(nums[i + 1:], path)
+                    path.pop()
 
+            return
+
+        backtracking(nums, [])
+        return res
 
 def main():
     nums = [1, 2, 2]
 
     sol = Solution()
-    sol.subsetsWithDup(nums)
+    print(sol.subsetsWithDup(nums))
 
 
 if __name__ == "__main__":

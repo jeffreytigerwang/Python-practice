@@ -10,20 +10,53 @@ class TreeNode:
         self.right = right
 class Solution:
     def kthSmallest(self, root, k):
-        self.k = k
-        self.res = None
-        self.helper(root)
-        return self.res
+        # recursive
 
-    def helper(self, node):
-        if not node:
-            return
-        self.helper(node.left)
-        self.k -= 1
-        if self.k == 0:
-            self.res = node.val
-            return
-        self.helper(node.right)
+        # count = 1
+        # res = 0
+        #
+        # def inOrderTraversal(root):
+        #     nonlocal count
+        #     nonlocal res
+        #
+        #     if root:
+        #         inOrderTraversal(root.left)
+        #         if count == k:
+        #             print(root.val)
+        #             count += 1
+        #             res = root.val
+        #         else:
+        #             count += 1
+        #         inOrderTraversal(root.right)
+        #
+        # inOrderTraversal(root)
+        #
+        # return res
+
+
+        # iterative
+
+        curr = root
+        temp = []
+        count = 0
+
+        while curr or temp:
+            while curr: # visit all left subtrees/nodes
+                temp.append(curr)
+                curr = curr.left
+
+            curr = temp.pop()   # visit the list from small to large
+            count += 1
+
+            if count == k:
+                return curr.val
+
+            curr = curr.right   # start to visit right subtrees/nodes
+
+
+
+
+
 
 sol = Solution()
 
@@ -32,4 +65,4 @@ root.left = TreeNode(1)
 root.left.right = TreeNode(2)
 root.right = TreeNode(4)
 
-sol.kthSmallest(root, 2)
+print(sol.kthSmallest(root, 1))

@@ -2,30 +2,24 @@
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        # # works but too complex?
-        # # wrong, ab --> a, not ab != ba
-        # res = []
-        #
-        # tempList = [s[i: j] for i in range(len(s)) for j in range(i + 1, len(s) + 1)]
-        #
-        # for i in tempList:
-        #     if i == i[::-1]:
-        #         res.append(i)
-        #
-        # return str(max(res, key=len))
+        res = ''
 
-        res = ""
-
-        def helper(s, l, r):
+        def helper(l, r):
             while l >= 0 and r < len(s) and s[l] == s[r]:
-                l = l - 1
-                r = r + 1
-            return s[l+1: r]
+                l -= 1
+                r += 1
+
+            return s[l + 1: r]
 
         for i in range(len(s)):
-            res = max(res, helper(s, i, i), helper(s, i, i+1), key=len)
+            res = max(res, helper(i, i), helper(i, i + 1), key=len)
+            # if len(helper(i, i)) > len(helper(i, i + 1)):
+            #     res = res if len(res) > len(helper(i, i)) else helper(i, i)
+            # else:
+            #     res = res if len(res) > len(helper(i, i + 1)) else helper(i, i + 1)
 
         return res
+
 def main():
     sol = Solution()
     s = "babad"

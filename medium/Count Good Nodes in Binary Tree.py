@@ -1,3 +1,5 @@
+# https://leetcode.com/problems/count-good-nodes-in-binary-tree/submissions/924977077/
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -6,26 +8,26 @@ class TreeNode:
         self.right = right
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        count = []
+        count = 0
 
-        def rec(node: TreeNode, tempMax: int):
-            if node.left is None and node.right is None:
-                if node.val >= tempMax:
-                    count.append(node.val)
-                    return
+        def dfs(root, currMax):
+            nonlocal count
 
-            if node.val >= tempMax:
-                count.append(node.val)
+            if not root:
+                return
 
-            if node.left is not None:
-                rec(node.left, max(node.val, tempMax))
+            if root.val >= currMax:
+                # res.append(root.val)
+                count += 1
 
-            if node.right is not None:
-                rec(node.right, max(node.val, tempMax))
+            temp = max(currMax, root.val)
 
-        rec(root, root.val)
-        res = len(count)
-        return res
+            dfs(root.left, temp)
+            dfs(root.right, temp)
+
+        dfs(root, root.val)
+
+        return count
 
 
 def main():

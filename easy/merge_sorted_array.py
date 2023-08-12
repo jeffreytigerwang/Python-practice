@@ -7,21 +7,19 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        index1 = len(nums1) - 1
-        i1 = m-1
-        i2 = n-1
 
-        while i2>=0:
-            if nums1[i1] > nums2[i2] and i1 >= 0:
-                nums1[index1] = nums1[i1]
-                i1 = i1-1
+        while m > 0 and n > 0:
+            if nums1[m - 1] > nums2[n - 1]:
+                nums1[m + n - 1] = nums1[m - 1]
+                m -= 1
             else:
-                nums1[index1] = nums2[i2]
-                i2 = i2-1
-            index1 = index1-1
+                nums1[m + n - 1] = nums2[n - 1]
+                n -= 1
 
+        # fill nums1 with leftover numbers in nums2
 
-        print(nums1)
+        if n > 0:
+            nums1[: n] = nums2[: n]
 
 
 t1 = [1, 2, 3, 0, 0, 0]

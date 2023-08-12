@@ -4,103 +4,38 @@ from typing import List
 
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        height = len(board)
-        width = len(board[0])
-        usedLetter = []
-        tempDictionary = {}
+        row = len(board)
+        column = len(board[0])
+        # path = []
 
-        for i in word:
-            tempDictionary[i] = []
+        def backtracking(r, c, path, word):
+            if not word:
+                return True
 
-        for character in tempDictionary.keys():
-            coordsList = [[x, y] for x, li in enumerate(board) for y, val in enumerate(li) if val == character]
-            tempDictionary[character].extend(coordsList)
-
-            if not tempDictionary[character]:
+            if r < 0 or c < 0 or r >= row or c >= column or [r, c] in path or board[r][c] != word[0]:
                 return False
 
-        # print(tempDictionary)
+            path.append([r, c])
+            res = backtracking(r + 1, c, path, word[1:]) or backtracking(r - 1, c, path, word[1:]) or backtracking(r, c + 1, path, word[1:]) or backtracking(r, c - 1, path, word[1:])
+            path.pop()
 
-        def recursion(nextCharacterIndex, validCoordinates):
-            if nextCharacterIndex >= len(word):
-                return True
+            return res
 
-            # if not validCoordinates:
+        tempDict = {}
 
+        for i in range(row):
+            for j in range(column):
+                tempDict[board[i][j]] = 1 + tempDict.get(board[i][j], 0)
 
-            for validCoordinate in validCoordinates:
-                for nextCharacterCoordinate in tempDictionary[word[nextCharacterIndex]]:
-                    # May have more than 1 valid coordinate
-                    if validCoordinate == nextCharacterCoordinate and nextCharacterCoordinate not in usedLetter:
-                        # print(nextCharacterCoordinate)
-                        usedLetter.append(nextCharacterCoordinate)
-                        tempCoordiantes = []
-
-                        if self.isValidPos(nextCharacterCoordinate[0] - 1, nextCharacterCoordinate[1], height, width):
-                            tempCoordiantes.append([nextCharacterCoordinate[0] - 1, nextCharacterCoordinate[1]])
-
-                        if self.isValidPos(nextCharacterCoordinate[0] + 1, nextCharacterCoordinate[1], height, width):
-                            tempCoordiantes.append([nextCharacterCoordinate[0] + 1, nextCharacterCoordinate[1]])
-
-                        if self.isValidPos(nextCharacterCoordinate[0], nextCharacterCoordinate[1] - 1, height, width):
-                            tempCoordiantes.append([nextCharacterCoordinate[0], nextCharacterCoordinate[1] - 1])
-
-                        if self.isValidPos(nextCharacterCoordinate[0], nextCharacterCoordinate[1] + 1, height, width):
-                            tempCoordiantes.append([nextCharacterCoordinate[0], nextCharacterCoordinate[1] + 1])
-
-                        # return recursion(nextCharacterIndex + 1, tempCoordiantes)
-                        if recursion(nextCharacterIndex + 1, tempCoordiantes):
-                            return True
-
-                        usedLetter.pop()
-                        # print("Next valid duplicate")
-                        # print("")
-
+        try:
+            if tempDict[word[0]] > tempDict[word[-1]]:
+                word = word[:: -1]
+        except KeyError:
             return False
 
-
-        for value in tempDictionary[word[0]]:
-            # print(value)
-            usedLetter.append(value)
-            initialValidCoordiantes = []
-
-            if self.isValidPos(value[0] - 1, value[1], height, width):
-                initialValidCoordiantes.append([value[0] - 1, value[1]])
-
-            if self.isValidPos(value[0] + 1, value[1], height, width):
-                initialValidCoordiantes.append([value[0] + 1, value[1]])
-
-            if self.isValidPos(value[0], value[1] - 1, height, width):
-                initialValidCoordiantes.append([value[0], value[1] - 1])
-
-            if self.isValidPos(value[0], value[1] + 1, height, width):
-                initialValidCoordiantes.append([value[0], value[1] + 1])
-
-            # print(initialValidCoordiantes)
-
-            if recursion(1, initialValidCoordiantes):
-                print(usedLetter)
-                return True
-
-            usedLetter.pop()
+        for i in range(row):
+            for j in range(column):
+                if board[i][j] == word[0] and backtracking(i, j, [], word):
+                    return True
 
         return False
-
-
-    def isValidPos(self, i, j, height, width):
-        if (i < 0 or j < 0 or i > height - 1 or j > width - 1):
-            return 0
-        return 1
-
-        # print(tempDictionary)
-
-
-def main():
-    sol = Solution()
-    board = [["A", "A", "A", "A"], ["A", "A", "A", "A"], ["A", "A", "E", "A"]]
-    word = "AAAAAAAAB"
-
-    print(sol.exist(board, word))
-
-if __name__ == "__main__":
-    main()

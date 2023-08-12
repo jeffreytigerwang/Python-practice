@@ -4,42 +4,34 @@ from typing import List
 
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        # https://leetcode.com/problems/spiral-matrix/solutions/394774/python-3-solution-for-spiral-matrix-one-of-the-most-easiest-you-will-never-forget/
-        if not matrix:
-            return []
-
-        res = []
-
-        # top = 0
-        # bottom = len(matrix) - 1
+        # if not matrix:
+        #     return []
         #
         # left = 0
         # right = len(matrix[0]) - 1
+        # top = 0
+        # bottom = len(matrix) - 1
+        # res = []
         #
-        # #   Approach 1
-        # while left <= right and top <= bottom:
-        #     for column in range(left, right + 1):
-        #         res.append(matrix[top][column])
-        #     top += 1
+        # while left < right and top < bottom:
+        #     res.extend(matrix[top][left: right])
+        #     res.extend(col[right] for col in matrix[top: bottom])
+        #     res.extend(matrix[bottom][right: left: -1])
+        #     res.extend(col[left] for col in matrix[bottom: top: -1])
         #
-        #     for row in range(top, bottom + 1):
-        #         res.append(matrix[row][right])
-        #     right -= 1
+        #     left, right, top, bottom = left + 1, right - 1, top + 1, bottom - 1
         #
-        #     for column in reversed(range(left, right + 1)):
-        #         res.append(matrix[bottom][column])
-        #     bottom -= 1
+        # # Handle edge case - center
+        # for row in range(top, bottom + 1):
+        #     for col in range(left, right + 1):
+        #         res.append(matrix[row][col])
         #
-        #     for row in reversed(range(top, bottom + 1)):
-        #         res.append(matrix[row][left])
-        #     left += 1
-        #
-        # return res[:len(matrix) * len(matrix[0])]
+        # return res
 
+        res = []
 
-        #Approach 2
         while matrix:
-            res += matrix.pop(0)
+            res.extend(matrix.pop(0))
             matrix = list(zip(*matrix))[::-1]
 
         return res

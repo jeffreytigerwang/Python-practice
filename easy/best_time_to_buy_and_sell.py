@@ -25,17 +25,21 @@ class Solution:
         #
         # return res
 
-        if not prices or len(prices) == 1:
+        if not prices or len(prices) <= 1:
             return 0
 
-        max_p = 0
         temp = prices[0]
+        res = 0
+
         for i in range(1, len(prices)):
-            if temp < prices[i]:
-                max_p = max(max_p, prices[i] - temp)
+            if prices[i] > temp:
+                res = max(res, prices[i] - temp)
+
             else:
                 temp = prices[i]
-        return max_p
+
+        return res
+
 
 
 sol = Solution()

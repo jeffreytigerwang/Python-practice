@@ -4,55 +4,35 @@ from typing import List
 
 
 class Solution:
+    # My DP approach
+    # def canJump(self, nums):
+    #     dp = [False] * len(nums)
+    #     dp[0] = True
+    #
+    #     for i in range(len(nums)):
+    #         if dp[i]:
+    #             # print(nums[i])
+    #             for j in range(1, nums[i] + 1):
+    #
+    #                 if i + j < len(nums):
+    #                     dp[i + j] = True
+    #                 else:
+    #                     return True
+    #
+    #     return dp[-1]
+    #
+
+    # Greedy
+
     def canJump(self, nums):
-        # # Dynamic programming
-        #
-        # statusPosition = [False for i in range(len(nums))]
-        # statusPosition[0] = True
-        #
-        # # starting position
-        # i = 0
-        #
-        # for maxReach in range(1, len(nums)):
-        #     print("maxReach: ", maxReach)
-        #     while i < maxReach:
-        #         print("i:", i)
-        #         if statusPosition[i] and nums[i] + i >= maxReach:   # how far I can reach from i; i = 0 initially; I
-        #                                                             # can not reach maxReach from i, increment i.
-        #             statusPosition[maxReach] = True
-        #             break
-        #
-        #         i = i + 1
-        #     print("")
-        #
-        # print(statusPosition)
-        # return statusPosition[-1]
+        goal = len(nums) - 1    # last index
 
-        # # Greedy algorithm
-        # i = 0
-        # maxRange = 0
-        #
-        # while i < len(nums) and i <= maxRange:
-        #     maxRange = max(maxRange, i + nums[i])
-        #     i += 1
-        #
-        # print(maxRange)
-        # return i == len(nums)
+        for i in range(len(nums) - 2, -1, -1):
+            if i + nums[i] >= goal: # whether if we can reach goal at index i
+                goal = i
 
-        statusList = [False for i in range(len(nums))]
-        statusList[0] = True
+        return goal == 0
 
-        i = 0
-
-        for maxReach in range(len(nums)):
-            while i < maxReach:
-                if statusList[i] and i + nums[i] >= maxReach:
-                    statusList[maxReach] = True
-                    break
-
-                i += 1
-
-        return statusList[-1]
 
 def main():
     sol = Solution()

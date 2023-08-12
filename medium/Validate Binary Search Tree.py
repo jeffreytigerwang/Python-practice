@@ -9,22 +9,33 @@ class TreeNode:
         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        output = []
-        self.inOrderTraversal(root, output)
+        # res = []
+        #
+        # def inOrderTraversal(root):
+        #     if root:
+        #         inOrderTraversal(root.left)
+        #         res.append(root.val)
+        #         inOrderTraversal(root.right)
+        #
+        # inOrderTraversal(root)
+        #
+        # for i in range(1, len(res)):
+        #     if res[i - 1] >= res[i]:
+        #         return False
+        #
+        # return True
 
-        for i in range(len(output) - 1):
-            if output[i] >= output[i + 1]:
+        def isValid(root, left, right):
+            if not root:
+                return True
+
+            if not (right > root.val > left):
                 return False
 
-        return True
+            return isValid(root.left, left, root.val) and isValid(root.right, root.left, right)
 
-    def inOrderTraversal(self, root, output):
-        if root is None:
-            return
+        return isValid(root, float("-inf"), float("inf"))
 
-        self.inOrderTraversal(root.left, output)
-        output.append(root.val)
-        self.inOrderTraversal(root.right, output)
 
 def main():
     node1 = TreeNode(1)

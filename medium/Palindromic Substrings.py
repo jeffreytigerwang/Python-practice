@@ -2,34 +2,39 @@
 
 class Solution:
     def countSubstrings(self, s: str) -> int:
-        res = []
+        res = 0
 
-        def helper(s, l, r):
+        def helper(l, r):
+            temp = 0
+
             while l >= 0 and r < len(s) and s[l] == s[r]:
-                res.append(s[l:r+1])
                 l -= 1
                 r += 1
 
-            # return s[l + 1: r]
+                temp += 1
 
-        # for i in range(len(s)):
-        #     temp = helper(s, i, i)
-        #
-        #     if temp != "":
-        #         res.append(temp)
-        #
-        #     temp = helper(s, i, i + 1)
-        #
-        #     if temp != "":
-        #         res.append(temp)
+            return temp
 
         for i in range(len(s)):
-            helper(s, i, i)
-            helper(s, i, i+1)
+            # l, r = i, i
+            #
+            # while l >= 0 and r < len(s) and s[l] == s[r]:
+            #     l -= 1
+            #     r += 1
+            #     res += 1
+            #
+            # l, r = i, i + 1
+            #
+            # while l >= 0 and r < len(s) and s[l] == s[r]:
+            #     l -= 1
+            #     r += 1
+            #     res += 1
 
-        print(res)
-        print(len(res))
-        # return len(res)
+            res += helper(i, i)
+            res += helper(i, i + 1)
+
+        return res
+
 
 def main():
     sol = Solution()

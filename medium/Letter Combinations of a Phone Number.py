@@ -1,24 +1,26 @@
 # https://leetcode.com/problems/letter-combinations-of-a-phone-number/
-class Solution(object):
-    def letterCombinations(self, digits):
-        """
-        :type digits: str
-        :rtype: List[str]
-        """
-        if not digits:
-            return []
-        else:
-            res = ['']
+from typing import List
 
-        dictionary = {'2': "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
 
-        for digit in digits:
-            current_combination = []
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        phoneDict = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        res = []
+        digitsLength = len(digits)
 
-            for letter in dictionary[digit]:
-                for combination in res:
-                    current_combination.append(combination + letter)
+        def backtracking(string, path):
+            if len(path) == digitsLength:
+                res.append(path[:])
+                return
 
-            res = current_combination
+            for i in range(len(string)):
+                for j in range(len(phoneDict[string[i]])):
+                    # path.append(phoneDict[string[i]][j])
+                    backtracking(string[i + 1:], path + phoneDict[string[i]][j])
+                    # path.pop()
+            return
+
+        if digits:
+            backtracking(digits, '')
 
         return res

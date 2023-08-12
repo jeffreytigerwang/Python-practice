@@ -11,57 +11,36 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        resListNode = ListNode()
-        tail = resListNode
+        s1 = ''
+        s2 = ''
 
-        temp1 = []
-        temp2 = []
+        temp = l1
 
-        head1 = l1
-        head2 = l2
+        while temp:
+            s1 += str(temp.val)
+            temp = temp.next
 
-        while head1 is not None:
-            temp1.append(head1.val)
-            head1 = head1.next
+        temp = l2
 
-        while head2 is not None:
-            temp2.append(head2.val)
-            head2 = head2.next
+        while temp:
+            s2 += str(temp.val)
+            temp = temp.next
 
-        temp1.reverse()
-        temp2.reverse()
+        s1 = reversed(s1)
+        s2 = reversed(s2)
 
-        s1 = [str(item) for item in temp1]
-        s1 = "".join(s1)
-        res1 = int(s1)
+        sum = int(''.join(s1)) + int(''.join(s2))
 
-        s2 = [str(item) for item in temp2]
-        s2 = "".join(s2)
-        res2 = int(s2)
+        dummy = ListNode()
+        temp = dummy
 
-        res = res1 + res2
+        for i in reversed(str(sum)):
+            temp.next = ListNode(int(i))
+            temp = temp.next
 
-        res = list(str(res))
-        res.reverse()
+        return dummy.next
 
-        print(res)
 
-        for i in range(len(res)):
-        # for i in res:
-            if i >= len(res) - 1:
-                tail.val = res[i]
-                tail.next = None
-            else:
-                tail.val = res[i]
-                tail.next = ListNode()
-                tail = tail.next
-
-        return resListNode
-
-        # head = resListNode
-        # while head:
-        #     print(head.val)
-        #     head = head.next
 
 def main():
     l1_1 = ListNode(2)
